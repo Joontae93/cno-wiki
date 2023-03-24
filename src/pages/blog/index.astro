@@ -15,6 +15,20 @@ const posts = (await getCollection('blog')).sort(
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style lang="scss">
+			ul {
+				list-style-type: none;
+				padding: unset;
+				li {
+					display: flex;
+					:global(time) {
+						flex: 0 0 130px;
+						font-style: italic;
+						color: #595959;
+					}
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
@@ -33,22 +47,5 @@ const posts = (await getCollection('blog')).sort(
 			</section>
 		</main>
 		<Footer />
-		<style lang="scss">
-			ul {
-				list-style-type: none;
-				padding: unset;
-				li {
-					display: flex;
-					:global(time) {
-						flex: 0 0 130px;
-						font-style: italic;
-						color: #595959;
-					}
-					a:visited {
-						// color: #8e32dc;
-					}
-				}
-			}
-		</style>
 	</body>
 </html>
