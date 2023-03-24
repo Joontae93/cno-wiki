@@ -2,7 +2,7 @@
 title: 'Markdown Style Guide'
 description: 'Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.'
 pubDate: 'Jul 01 2022'
-heroImage: '/placeholder-hero.jpg'
+# heroImage: '/placeholder-hero.jpg'
 author: 'Astro.js'
 ---
 
@@ -81,19 +81,19 @@ The blockquote element represents content that is quoted from another source, op
 
 #### Unordered List
 
-- List item
-- Another item
-- And another item
+-   List item
+-   Another item
+-   And another item
 
 #### Nested list
 
-- Fruit
-  - Apple
-  - Orange
-  - Banana
-- Dairy
-  - Milk
-  - Cheese
+-   Fruit
+    -   Apple
+    -   Orange
+    -   Banana
+-   Dairy
+    -   Milk
+    -   Cheese
 
 ## Other Elements — abbr, sub, sup, kbd, mark
 

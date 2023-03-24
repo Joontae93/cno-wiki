@@ -2,7 +2,7 @@
 title: 'Common functions.php Functions'
 description: 'Code Snippets for Wordpress functions.php files'
 pubDate: 'Mar 24 2023'
-heroImage: '/placeholder-hero.jpg'
+# heroImage: '/placeholder-hero.jpg'
 author: 'Blake Perkins'
 ---
 

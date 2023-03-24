@@ -2,7 +2,7 @@
 title: 'Getting started (with @wordpress/scripts)'
 description: '@wordpress/scripts is an npm package developed by Wordpress'
 pubDate: 'Mar 03 2023'
-heroImage: '/placeholder-hero.jpg'
+# heroImage: '/placeholder-hero.jpg'
 author: 'KJ Roelke'
 ---
 

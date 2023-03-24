@@ -2,7 +2,7 @@
 title: 'Common Style Fixes'
 description: 'Code Snippets for CSS'
 pubDate: 'Mar 24 2023'
-heroImage: '/placeholder-hero.jpg'
+# heroImage: '/placeholder-hero.jpg'
 author: 'Blake Perkins'
 ---
 
