@@ -9,68 +9,58 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style lang="scss">
+			@use '../styles/abstracts/variables' as *;
+			@use '../styles/base/typography' as t;
+			.code-block {
+				@extend code;
+				padding: 1rem 2rem;
+			}
+		</style>
 	</head>
 	<body>
 		<Header title={SITE_TITLE} />
 		<main>
 			<article>
-				<h1>🧑‍💻 Hey there, dev!</h1>
-				<p>
-					This is a starter wiki where KJ can dump his thoughts until
-					the team decides on a better place to put information.
-				</p>
-				<p>
-					In this wiki, we will hopefully begin to define styles, code
-					standards, etc. Let's get started!
-				</p>
-				<p>
-					Add markdown files to
-					`/src/content/blog/wherever-makes-logical-sense`
-				</p>
+				<section class="intro">
+					<h2>Hey there, dev! 🧑‍💻</h2>
+					<p>
+						In this wiki, we will hopefully begin to define styles,
+						code standards, etc. Let's get started!
+					</p>
+				</section>
+				<section class="how-to">
+					<h2>Some Quick Tips 📝</h2>
+					<div class="tip">
+						<h3 class="tip__title">Adding Content ✍️</h3>
+						<div class="tip__content">
+							<p>
+								To add content to the blog, drop some markdown
+								files to <code
+									>`/src/content/blog/wherever-makes-logical-sense`</code
+								> and push the commit.
+							</p>
+							<p>
+								All markdown files are looking for the following
+								frontmatter (dropped between opening & closing
+								triple hyphens):
+								<pre
+									class="code-block">title: string<br />description: string <br />pubDate: 'Mar ## 20##' <br />heroImage: '/cno-wiki/public/image-url.jpg'<br />author: string<br />updatedDate: <mark>optional</mark> string</pre>
+							</p>
+						</div>
+					</div>
+					<div class="tip">
+						<h3 class="tip__title">Modifying Content 🖍️</h3>
+						<p class="tip__content">
+							If making a change to a blog post, make sure to
+							change the <code
+								>updatedDate: '[YOUR_DATE_HERE]'</code
+							>!
+						</p>
+					</div>
+				</section>
 			</article>
-			<aside class="from-astro">
-				<cite>
-					<p>
-						This template comes with a few integrations already
-						configured in your
-						<code>astro.config.mjs</code> file. You can customize your
-						setup with
-						<a href="https://astro.build/integrations"
-							>Astro Integrations</a
-						> to add tools like Tailwind, React, or Vue to your project.
-					</p>
-					<p>
-						Have fun! If you get stuck, remember to <a
-							href="https://docs.astro.build/"
-							>read the docs
-						</a> or <a href="https://astro.build/chat"
-							>join us on Discord</a
-						> to ask questions.
-					</p>
-				</cite>
-				<h2>&ndash; From Astro</h2>
-			</aside>
 		</main>
 		<Footer />
-		<style lang="scss">
-			@use '../styles/abstracts/variables' as *;
-			.from-astro {
-				font-family: monospace;
-				background-color: adjust-color($color: white, $lightness: -30%);
-				color: black;
-				padding: 2rem;
-				border-radius: 1rem;
-				h2 {
-					color: black;
-				}
-				:is(.dark) & {
-					background-color: adjust-color(
-						$color: $bg-dark,
-						$lightness: 30%,
-						$alpha: 1
-					);
-				}
-			}
-		</style>
 	</body>
 </html>
