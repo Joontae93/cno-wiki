@@ -2,6 +2,8 @@
 
 A Markdown-based wiki that will be depolyed w/ Astro + Github pages.
 
-## Adding Content
+## Changelog
 
-Add markdown files to `/src/content/blog/wherever-makes-logical-sense`
+### v1 Release!
+
+Release!

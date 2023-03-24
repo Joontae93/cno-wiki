@@ -6,6 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
+	site: 'https://choctaw-nation.github.io',
+	base: '/cno-wiki',
 	integrations: [mdx(), sitemap(), react()],
 });
