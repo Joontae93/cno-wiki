@@ -34,9 +34,11 @@ const isActive = href === pathname || href === pathname.replace(/\/$/, '');
 		color: white;
 		transition: all 0.2s ease;
 		&:hover {
-			background-image: none;
-			background-color: transparent;
+			background: none;
+			border-color: indigo;
 			color: indigo;
+			transform: translateY(-5px);
+			box-shadow: 2px 4px indigo;
 		}
 		:is(.dark &) {
 			border: 2px solid transparent;

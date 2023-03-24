@@ -49,8 +49,13 @@ img {
 }
 code {
 	padding: 2px 5px;
-	background-color: black;
-	color: green;
+	color: black;
+	background-color: grey;
+	font-family: monospace;
+	:is(.dark &) {
+		color: green;
+		background-color: black;
+	}
 }
 pre {
 	padding: 1rem;
