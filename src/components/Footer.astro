@@ -1,5 +1,4 @@
 ---
-import { SITE_DESCRIPTION } from '../consts';
 const today = new Date();
 ---
 
@@ -7,7 +6,11 @@ const today = new Date();
 	<span class="copyright"
 		>&copy; {today.getFullYear()} Choctaw Nation of Oklahoma. All rights reserved.</span
 	>
-	<span class="subheadline">{SITE_DESCRIPTION}</span>
+	<span class="subheadline"
+		>Built with ❤️ and <a href="https://astro.build" target="_blank"
+			>Astro.js</a
+		></span
+	>
 </footer>
 <style lang="scss">
 	@use '../styles/abstracts/variables' as *;
@@ -18,10 +21,5 @@ const today = new Date();
 		display: flex;
 		flex-direction: column;
 		align-items: stretch;
-		// background-color: adjust-color($color: white, $lightness: -40%);
-		// color: $bg-dark;
-		:is(.dark &) {
-			// background-color: adjust-color($color: $bg-dark, $lightness: 40%);
-		}
 	}
 </style>

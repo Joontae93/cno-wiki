@@ -8,7 +8,7 @@ body {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	line-height: 1.5;
-	color: #444;
+	color: #222;
 }
 h1,
 h2,
@@ -49,8 +49,8 @@ img {
 }
 code {
 	padding: 2px 5px;
-	color: black;
-	background-color: grey;
+	color: white;
+	background-color: #323232;
 	font-family: monospace;
 	:is(.dark &) {
 		color: green;
