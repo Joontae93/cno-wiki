@@ -1,0 +1,9 @@
+@use './base/vendors';
+@use './base/reset';
+@use './base/typography';
+
+@use './abstracts/variables';
+
+html:has(.dark) {
+	background-color: #303030;
+}
