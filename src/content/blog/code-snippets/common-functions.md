@@ -1,0 +1,237 @@
+---
+title: 'Common functions.php Functions'
+description: 'Code Snippets for Wordpress functions.php files'
+pubDate: 'Mar 24 2023'
+heroImage: '/placeholder-hero.jpg'
+author: 'Blake Perkins'
+---
+
+# SVG Fixes
+
+## Allow SVG upload in Media Library
+
+```
+<?php
+add_filter('upload_mimes', 'cc_mime_types');
+
+function cc_mime_types($mimes) {
+  $mimes['svg'] = 'image/svg+xml';
+  return $mimes;
+}
+?>
+```
+
+## Set Height and Width on SVGs in Frontend
+
+```
+<?php
+add_filter( 'wp_get_attachment_image_src', 'fix_wp_get_attachment_image_svg', 10, 4 );
+
+function fix_wp_get_attachment_image_svg($image, $attachment_id, $size, $icon) {
+  if (is_array($image) && preg_match('/\.svg$/i', $image[0]) && $image[1] <= 1) {
+    if(is_array($size)) {
+      $image[1] = $size[0]; $image[2] = $size[1];
+    } elseif( ($xml = simplexml_load_file($image[0])) !== false) {
+      $attr = $xml->attributes();
+      $viewbox = explode(' ', $attr->viewBox);
+      $image[1] = isset($attr->width) && preg_match('/\d+/', $attr->width, $value) ? (int) $value[0] : (count($viewbox) == 4 ? (int) $viewbox[2] : null);
+      $image[2] = isset($attr->height) && preg_match('/\d+/', $attr->height, $value) ? (int) $value[0] : (count($viewbox) == 4 ? (int) $viewbox[3] : null);
+    } else {
+      $image[1] = $image[2] = null;
+    }
+  }
+
+  return $image;
+}
+?>
+```
+
+# Vimeo Fixes
+
+## Add remove dnt from oEmbed Vimeo videos
+
+```
+<?php
+add_filter( 'oembed_fetch_url', 'dl_oembed', 10, 3 );
+
+function dl_oembed ( $provider, $url, $args ) {
+  if ( strpos( $provider, 'vimeo.com' ) !== false)
+  return add_query_arg( array('dnt' => false), $provider );
+}
+?>
+```
+
+# Gravity Forms Fixes
+
+## Add Classes to Submit Button
+
+Replace `custom-class` with class name to add to button.
+
+```
+<?php
+ add_filter( 'gform_submit_button', 'add_custom_css_classes', 10, 2 );
+
+ function add_custom_css_classes( $button, $form ) {
+  $dom = new DOMDocument();
+  $dom->loadHTML( '<?xml encoding="utf-8" ?>' . $button );
+  $input = $dom->getElementsByTagName( 'input' )->item(0);
+  $classes = $input->getAttribute( 'class' );
+  $classes .= " custom-class";
+  $input->setAttribute( 'class', $classes );
+  return $dom->saveHtml( $input );
+ }
+?>
+```
+
+# Custom Image Sizes
+
+## Remove Default Image Sizes
+
+```
+<?php
+//Remove default image sizes
+add_filter( 'intermediate_image_sizes_advanced', 'prefix_remove_default_images' );
+function prefix_remove_default_images( $sizes ) {
+  unset( $sizes['large']); // Added to remove 1024
+  unset( $sizes['thumbnail']);
+  unset( $sizes['medium']);
+  unset( $sizes['medium_large']);
+  unset( $sizes['1536x1536']);
+  unset( $sizes['2048x2048']);
+
+  return $sizes;
+}
+?>
+```
+
+## Register Custom Sizes
+
+Replace `image-size` with custom name and first ## with width and second ## with height.
+
+```
+<?php
+add_action( 'after_setup_theme', 'register_image_sizes' );
+function register_image_sizes() {
+  add_image_size( 'image-size', ##, ##, true ); // (cropped)
+  add_image_size( 'image-size-2', ##, ##, false ); // (uncropped)
+}
+?>
+```
+
+# Preload CSS
+
+```
+<?php
+add_filter('style_loader_tag', 'preload_for_css', 10, 4);
+
+function preload_for_css($html, $handle, $href, $media) {
+  if (is_admin()) {
+    return $html;
+  }
+  echo '<link rel="stylesheet preload" as="style" href="' . $href . '" media="all" lazyload>';
+}
+?>
+```
+
+# Redirect Single Pages of CPT
+
+Replace `custom_post_type` with the one to redirect.
+
+```
+<?php
+add_action( 'template_redirect', 'redirect_single_pages');
+
+function redirect_single_pages() {
+  if ( is_singular('custom_post_type') ) {
+    global $post;
+    $post_slug = $post->post_name;
+    $redirect_link = get_post_type_archive_link( 'custom_post_type' );
+    wp_safe_redirect( $redirect_link . '/#' . $post_slug, 302 );
+    exit;
+  }
+}
+?>
+```
+
+# Remove Defaults
+
+## Fully Remove Comments
+
+```
+<?php
+add_action( 'admin_menu', 'pk_remove_admin_menus' );
+
+function pk_remove_admin_menus() {
+	remove_menu_page( 'edit-comments.php' );
+}
+
+// Removes from post and pages
+add_action('init', 'pk_remove_comment_support', 100);
+
+function pk_remove_comment_support() {
+	remove_post_type_support( 'post', 'comments' );
+	remove_post_type_support( 'page', 'comments' );
+}
+
+// Removes from admin bar
+add_action( 'wp_before_admin_bar_render', 'pk_remove_comments_admin_bar' );
+
+function pk_remove_comments_admin_bar() {
+	global $wp_admin_bar;
+	$wp_admin_bar->remove_menu('comments');
+}
+?>
+```
+
+## Remove Editor
+
+Replace `page` with each post type. Duplicate `remove_post_type_support` line if removing from more than 1 post type.
+
+```
+<?php
+add_action('init', 'my_rem_editor_from_post_type');
+
+function my_rem_editor_from_post_type() {
+  remove_post_type_support('page', 'editor');
+}
+
+?>
+```
+
+## Remove Gutenberg from frontend
+
+```
+<?php
+add_action('wp_enqueue_scripts', 'remove_wp_block_library_css', 100);
+
+function remove_wp_block_library_css() {
+  wp_dequeue_style('wp-block-library');
+  wp_dequeue_style('wp-block-library-theme');
+  wp_dequeue_style('wc-blocks-style'); // Remove WooCommerce block CSS
+}
+?>
+```
+
+# Yoast
+
+## Move Yoast to Bottom in Backend
+
+```
+add_filter('wpseo_metabox_prio', 'move_yoast_to_bottom');
+
+function move_yoast_to_bottom() {
+  return 'low';
+}
+```
+
+## Limit Number of Entries on Sitemap to 200
+
+```
+<?php
+add_filter('wpseo_sitemap_entries_per_page', 'max_entries_per_sitemap');
+
+function max_entries_per_sitemap() {
+  return 200;
+}
+?>
+```

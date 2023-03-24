@@ -2,8 +2,13 @@
 @use './base/reset';
 @use './base/typography';
 
-@use './abstracts/variables';
+@use './abstracts/variables' as *;
 
-html:has(.dark) {
-	background-color: #303030;
+html.dark {
+	background-color: $bg-dark;
+	color: white;
+	body {
+		background-color: inherit;
+		color: inherit;
+	}
 }

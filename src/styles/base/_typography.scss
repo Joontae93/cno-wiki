@@ -15,13 +15,17 @@ h2,
 h3,
 h4,
 h5,
-h6,
-strong,
-b {
+h6 {
 	color: #222;
+	:is(.dark &) {
+		color: white;
+	}
 }
 a {
 	color: #3273dc;
+	:is(.dark &) {
+		color: adjust-color($color: #3273dc, $lightness: 20%);
+	}
 }
 nav a {
 	margin-right: 10px;
@@ -45,7 +49,8 @@ img {
 }
 code {
 	padding: 2px 5px;
-	background-color: #f2f2f2;
+	background-color: black;
+	color: green;
 }
 pre {
 	padding: 1rem;
@@ -59,4 +64,13 @@ blockquote {
 	padding: 2px 0px 2px 20px;
 	margin: 0px;
 	font-style: italic;
+	:is(.dark &) {
+		background-color: #eee;
+		color: black;
+	}
+}
+mark {
+	:is(.dark &) {
+		background-color: goldenrod;
+	}
 }

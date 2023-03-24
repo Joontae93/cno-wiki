@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE } from '../consts';
 import DarkModeToggle from './DarkModeToggle.jsx';
 import Navbar from './Navbar.astro';
 ---
@@ -10,7 +10,6 @@ import Navbar from './Navbar.astro';
 			<h1>
 				{SITE_TITLE}
 			</h1>
-			<span class="subheadline">{SITE_DESCRIPTION}</span>
 		</div>
 
 		<DarkModeToggle client:load />
@@ -18,12 +17,35 @@ import Navbar from './Navbar.astro';
 
 	<Navbar />
 
-	<style>
+	<style lang="scss">
 		header {
 			margin: 0em 0 2em;
 		}
 		h2 {
 			margin: 0.5em 0;
 		}
+		.header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
 	</style>
 </header>
+<script is:inline>
+	const theme = (() => {
+		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+			return localStorage.getItem('theme');
+		}
+		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			return 'dark';
+		}
+		return 'light';
+	})();
+
+	if (theme === 'light') {
+		document.documentElement.classList.remove('dark');
+	} else {
+		document.documentElement.classList.add('dark');
+	}
+	window.localStorage.setItem('theme', theme);
+</script>

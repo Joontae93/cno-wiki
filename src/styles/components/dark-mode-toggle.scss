@@ -1,0 +1,18 @@
+@use '../abstracts/variables' as *;
+.dark-mode-toggle {
+	border-radius: 1rem;
+	padding: 1rem;
+	background-color: $bg-dark;
+	background-image: linear-gradient(
+		to right bottom,
+		transparent,
+		adjust-color($color: $bg-dark, $lightness: 30%)
+	);
+	font-weight: 600;
+	color: white;
+	cursor: pointer;
+	:is(.dark) & {
+		background-color: lightgray;
+		color: black;
+	}
+}

@@ -6,8 +6,8 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
-
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, author } =
+	Astro.props;
 ---
 
 <html lang="en">
@@ -25,6 +25,9 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			.last-updated-on {
 				font-style: italic;
 			}
+			.author {
+				display: block;
+			}
 		</style>
 	</head>
 
@@ -34,6 +37,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			<article>
 				{heroImage && <img width={720} height={360} src={heroImage} alt="" />}
 				<h1 class="title">{title}</h1>
+				{author && <span class="author">Authored by: {author}</span>}
 				<FormattedDate date={pubDate} />
 				{
 					updatedDate && (
