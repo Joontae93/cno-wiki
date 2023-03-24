@@ -4,6 +4,7 @@ description: 'How (and when) to use the Ternary Operator'
 pubDate: 'Mar 03 2023'
 heroImage: '/placeholder-hero.jpg'
 author: 'KJ Roelke'
+updatedDate: 'Mar 24 2023'
 ---
 
 As the Ternary Operator pattern can exist in both JS :electron: and PHP 🐘, I (KJ) decided to break this example out onto its own page.
@@ -26,7 +27,7 @@ By the single-line-if-statement rule, this could be refactored as:
 
 **Single-Line `if` statement:**
 
-```
+```php
 $biskinik_cat_name = '';
 $biskinik_term = get_the_terms( get_the_ID(), 'biskinik_categories' );
 if ( $biskinik_term ) $biskinik_cat_name = $biskinik_term[0]->slug;
@@ -36,7 +37,7 @@ However, since the purpose of this `if` statement is to conditionally assign a v
 
 **Ternary Operator:**
 
-```
+```php
 $biskinik_term = get_the_terms(get_the_ID(), 'biskinik_categories');
 $biskinik_cat_name = ($biskinik_term) ?  $biskinik_term[0]->slug : '';
 ```
@@ -72,7 +73,7 @@ A better option would be to refactor this code to make it more readable overall.
 
 ### The Best Option 🏆
 
-```
+```php
 $archive_content = get_post_meta(get_the_ID(), 'archive_content', true);
 $content = ( ! empty($archive_content) ) ? $archive_content : get_post_meta(get_the_ID(), 'content', true);
 ```
