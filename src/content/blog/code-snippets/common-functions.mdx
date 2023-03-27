@@ -4,27 +4,26 @@ description: 'Code Snippets for Wordpress functions.php files'
 pubDate: 'Mar 24 2023'
 # heroImage: '/placeholder-hero.jpg'
 author: 'Blake Perkins'
+updatedDate: 'Mar 27, 2023'
 ---
 
 # SVG Fixes
 
 ## Allow SVG upload in Media Library
 
-```
-<?php
+import CodeBlock from '../../../components/CodeBlock.astro';
+
+<CodeBlock language="php" codeBlock={`
 add_filter('upload_mimes', 'cc_mime_types');
 
 function cc_mime_types($mimes) {
   $mimes['svg'] = 'image/svg+xml';
   return $mimes;
-}
-?>
-```
+}`}/>
+
 
 ## Set Height and Width on SVGs in Frontend
-
-```
-<?php
+<CodeBlock language="php" codeBlock={`
 add_filter( 'wp_get_attachment_image_src', 'fix_wp_get_attachment_image_svg', 10, 4 );
 
 function fix_wp_get_attachment_image_svg($image, $attachment_id, $size, $icon) {
@@ -43,23 +42,22 @@ function fix_wp_get_attachment_image_svg($image, $attachment_id, $size, $icon) {
 
   return $image;
 }
-?>
-```
+`} />
+
 
 # Vimeo Fixes
 
 ## Add remove dnt from oEmbed Vimeo videos
-
-```
-<?php
+<CodeBlock language="php" codeBlock={`
 add_filter( 'oembed_fetch_url', 'dl_oembed', 10, 3 );
 
 function dl_oembed ( $provider, $url, $args ) {
   if ( strpos( $provider, 'vimeo.com' ) !== false)
   return add_query_arg( array('dnt' => false), $provider );
 }
-?>
-```
+`} />
+
+
 
 # Gravity Forms Fixes
 
@@ -67,11 +65,11 @@ function dl_oembed ( $provider, $url, $args ) {
 
 Replace `custom-class` with class name to add to button.
 
-```
-<?php
- add_filter( 'gform_submit_button', 'add_custom_css_classes', 10, 2 );
+<CodeBlock
+language="php"
+codeBlock={`add_filter( 'gform_submit_button', 'add_custom_css_classes', 10, 2 );
 
- function add_custom_css_classes( $button, $form ) {
+function add_custom_css_classes( $button, $form ) {
   $dom = new DOMDocument();
   $dom->loadHTML( '<?xml encoding="utf-8" ?>' . $button );
   $input = $dom->getElementsByTagName( 'input' )->item(0);
@@ -79,16 +77,13 @@ Replace `custom-class` with class name to add to button.
   $classes .= " custom-class";
   $input->setAttribute( 'class', $classes );
   return $dom->saveHtml( $input );
- }
-?>
-```
+}
+ `} />
 
 # Custom Image Sizes
 
 ## Remove Default Image Sizes
-
-```
-<?php
+<CodeBlock language="php" codeBlock={`
 //Remove default image sizes
 add_filter( 'intermediate_image_sizes_advanced', 'prefix_remove_default_images' );
 function prefix_remove_default_images( $sizes ) {
@@ -98,30 +93,24 @@ function prefix_remove_default_images( $sizes ) {
   unset( $sizes['medium_large']);
   unset( $sizes['1536x1536']);
   unset( $sizes['2048x2048']);
-
   return $sizes;
 }
-?>
-```
+`} />
 
 ## Register Custom Sizes
 
 Replace `image-size` with custom name and first ## with width and second ## with height.
-
-```
-<?php
+<CodeBlock language="php" codeBlock={`
 add_action( 'after_setup_theme', 'register_image_sizes' );
 function register_image_sizes() {
   add_image_size( 'image-size', ##, ##, true ); // (cropped)
   add_image_size( 'image-size-2', ##, ##, false ); // (uncropped)
 }
-?>
-```
+`} />
+
 
 # Preload CSS
-
-```
-<?php
+<CodeBlock language="php" codeBlock={`
 add_filter('style_loader_tag', 'preload_for_css', 10, 4);
 
 function preload_for_css($html, $handle, $href, $media) {
@@ -130,17 +119,13 @@ function preload_for_css($html, $handle, $href, $media) {
   }
   echo '<link rel="stylesheet preload" as="style" href="' . $href . '" media="all" lazyload>';
 }
-?>
-```
+`} />
 
 # Redirect Single Pages of CPT
 
 Replace `custom_post_type` with the one to redirect.
-
-```
-<?php
+<CodeBlock language="php" codeBlock={`
 add_action( 'template_redirect', 'redirect_single_pages');
-
 function redirect_single_pages() {
   if ( is_singular('custom_post_type') ) {
     global $post;
@@ -150,15 +135,13 @@ function redirect_single_pages() {
     exit;
   }
 }
-?>
-```
+`} />
+
 
 # Remove Defaults
 
 ## Fully Remove Comments
-
-```
-<?php
+<CodeBlock language="php" codeBlock={`
 add_action( 'admin_menu', 'pk_remove_admin_menus' );
 
 function pk_remove_admin_menus() {
@@ -180,28 +163,26 @@ function pk_remove_comments_admin_bar() {
 	global $wp_admin_bar;
 	$wp_admin_bar->remove_menu('comments');
 }
-?>
-```
+`} />
+
 
 ## Remove Editor
 
 Replace `page` with each post type. Duplicate `remove_post_type_support` line if removing from more than 1 post type.
 
-```
-<?php
+<CodeBlock language="php" codeBlock={`
 add_action('init', 'my_rem_editor_from_post_type');
 
 function my_rem_editor_from_post_type() {
   remove_post_type_support('page', 'editor');
 }
+`} />
 
-?>
-```
+
 
 ## Remove Gutenberg from frontend
 
-```
-<?php
+<CodeBlock language="php" codeBlock={`
 add_action('wp_enqueue_scripts', 'remove_wp_block_library_css', 100);
 
 function remove_wp_block_library_css() {
@@ -209,29 +190,26 @@ function remove_wp_block_library_css() {
   wp_dequeue_style('wp-block-library-theme');
   wp_dequeue_style('wc-blocks-style'); // Remove WooCommerce block CSS
 }
-?>
-```
+`} />
+
 
 # Yoast
 
 ## Move Yoast to Bottom in Backend
-
-```
+<CodeBlock language="php" codeBlock={`
 add_filter('wpseo_metabox_prio', 'move_yoast_to_bottom');
 
 function move_yoast_to_bottom() {
   return 'low';
 }
-```
+`} />
 
 ## Limit Number of Entries on Sitemap to 200
 
-```
-<?php
+<CodeBlock language="php" codeBlock={`
 add_filter('wpseo_sitemap_entries_per_page', 'max_entries_per_sitemap');
 
 function max_entries_per_sitemap() {
   return 200;
-}
-?>
-```
+}`} />
+

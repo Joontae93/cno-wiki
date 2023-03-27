@@ -47,7 +47,7 @@ img {
 	max-width: 100%;
 	height: auto;
 }
-code {
+code:not(.code-toolbar code) {
 	padding: 2px 5px;
 	color: white;
 	background-color: #323232;
@@ -58,11 +58,10 @@ code {
 	}
 }
 pre {
+	@extend code;
 	padding: 1rem;
 }
-pre > code {
-	all: unset;
-}
+
 blockquote {
 	border: 1px solid #999;
 	color: #222;
