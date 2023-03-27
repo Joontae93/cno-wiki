@@ -1,0 +1,41 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+import MapArticleList from '../../components/MapArticleList.astro';
+
+const posts = (
+	await getCollection('docs', (doc) => {
+		const filters = ['standards', 'code-snippets', 'guides'];
+		return filters.every((filter) => !doc.slug.includes(filter));
+	})
+).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const standards = (
+	await getCollection('docs', (doc) => doc.slug.includes('standards'))
+).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const snippets = (
+	await getCollection('docs', (doc) => doc.slug.includes('code-snippets'))
+).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const guides = (
+	await getCollection('docs', (doc) => doc.slug.includes('guides'))
+).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<MapArticleList posts={snippets} id="Code Snippets" />
+			<MapArticleList posts={guides} id="Guides" />
+			<MapArticleList posts={standards} id="Standards" />
+			<MapArticleList posts={posts} id="Posts" />
+		</main>
+		<Footer />
+	</body>
+</html>

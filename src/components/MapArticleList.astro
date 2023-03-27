@@ -1,0 +1,41 @@
+---
+import FormattedDate from './FormattedDate.astro';
+export interface Props {
+	id: string;
+	posts: any;
+}
+const { id, posts } = Astro.props;
+const htmlID = id.includes(' ') ? id.replaceAll(' ', '-') : id;
+---
+
+<section id={htmlID.toLowerCase()}>
+	<h2>{id}</h2>
+	<ul>
+		{
+			posts.map((post) => {
+				return (
+					<li>
+						<FormattedDate date={post.data.pubDate} />
+						<a href={`/cno-wiki/docs/${post.slug}/`}>
+							{post.data.title}
+						</a>
+					</li>
+				);
+			})
+		}
+	</ul>
+</section>
+<style lang="scss">
+	ul {
+		list-style-type: none;
+		padding: unset;
+		li {
+			display: flex;
+			:global(time) {
+				flex: 0 0 130px;
+				font-style: italic;
+				color: #595959;
+			}
+		}
+	}
+</style>
