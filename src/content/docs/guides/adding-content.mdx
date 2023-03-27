@@ -1,0 +1,61 @@
+---
+title: 'Adding Content'
+description: 'Adding content with markdown or MDX'
+pubDate: 'Mar 27 2023'
+author: 'KJ Roelke'
+---
+
+import CodeBlock from '../../../components/CodeBlock.astro';
+
+# Adding Content ✍️
+
+## File Types (aka Using MDX)
+
+Since we're a dev team, it is a fair assumption that we'll often be sharing code solutions or snippets with each other. To that end, using a `.mdx` file instead of a pure markdown file (`.md`) will allow us one clean trick: copiable code snippets! After the frontmatter (see below), import a CodeBlock component with `import CodeBlock from 'relative/path/to/components/CodeBlock.astro` and you'll then be able to use the CodeBlock snippet throughout your MDX file.
+
+The `<CodeBlock />` component takes two properties: `language` and `codeBlock`. Both properties are strings, and if you're using VS Code, you'll get intelligent hints about which languages you can use. 
+```typescript
+Props {
+	language: 'js' | 'scss' | 'php' | 'html' | 'md';
+	codeBlock: string;
+}
+```
+
+When adding the string to the `codeBlock` prop, use the following syntax: `codeBlock={your_code_inside_the_back_ticks}`. If you'd simply like to add a code block (but **not**have it copyable, you can use Markdown's triple-backtick expression. You can also add a language hint immediately after the first 3 backticks to have Astro auto-highlight your syntax. For example,
+<CodeBlock
+					language="php"
+					codeBlock={`
+					\`\`\`php
+					function your_php_here() {
+						$is_formatted = true;
+						return is_formatted;
+					}
+					\`\`\`
+					`}/>
+				 parses out to 
+				 ```php
+function your_php_here() {
+  $is_formatted = true;
+  return is_formatted;
+}
+```
+
+
+---
+
+## Adding New Content
+
+To add content to the blog, drop some markdown files to `/src/content/blog/wherever-makes-logical-sense` and push the commit.
+
+All markdown files are looking for the following frontmatter (dropped between opening & closing triple hyphens):
+
+```markdown
+---
+title: 'string',
+description: 'string',
+pubDate: 'Mar ## 20##',
+heroImage: '(optional) /cno-wiki/public/image-url.jpg',
+author: 'string',
+updatedDate:  '(optional) string'
+---
+```
