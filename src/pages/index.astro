@@ -3,22 +3,31 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import CodeBlock from '../components/CodeBlock.astro';
+
+const frontMatter = `
+title: 'string',
+description: 'string',
+pubDate: 'Mar ## 20##',
+heroImage: '(optional) /cno-wiki/public/image-url.jpg',
+author: 'string',
+updatedDate:  '(optional) string'`;
+
+const phpExample = `\`\`\`php
+function your_php_here() {
+  $is_formatted = true;
+  return is_formatted;
+}
+\`\`\``;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style lang="scss">
-			@use '../styles/abstracts/variables' as *;
-			@use '../styles/base/typography' as t;
-			.code-block {
-				@extend code;
-				padding: 1rem 2rem;
-			}
-		</style>
 	</head>
 	<body>
+		<script src="../prism/prism.js" is:inline></script>
 		<Header title={SITE_TITLE} />
 		<main>
 			<article>
@@ -34,33 +43,98 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 					<div class="tip">
 						<h3 class="tip__title">Adding Content ✍️</h3>
 						<div class="tip__content">
+							<h4>File Types (aka Using MDX)</h4>
 							<p>
-								To add content to the blog, drop some markdown
-								files to <code
-									>`/src/content/blog/wherever-makes-logical-sense`</code
-								> and push the commit.
+								Since we're a dev team, it is a fair assumption
+								that we'll often be sharing code solutions or
+								snippets with each other. To that end, using a
+								`.mdx` file instead of a pure markdown file
+								(`.md`) will allow us one clean trick: copiable
+								code snippets! After the frontmatter (see
+								below), import a CodeBlock component with <CodeBlock
+									language="js"
+									codeBlock="import CodeBlock from 'relative/path/to/components/CodeBlock.astro"
+								/> and you'll then be able to use the CodeBlock snippet
+								throughout your MDX file.
 							</p>
 							<p>
-								All markdown files are looking for the following
-								frontmatter (dropped between opening & closing
-								triple hyphens):
-								<pre
-									class="code-block">title: string<br />description: string <br />pubDate: 'Mar ## 20##' <br />heroImage: '/cno-wiki/public/image-url.jpg'<br />author: string<br />updatedDate: <mark>optional</mark> string</pre>
+								The <code>{`<CodeBlock />`}</code> component takes
+								two properties: <code>language</code> and <code
+									>codeBlock</code
+								>. Both properties are strings, and if you're
+								using VS Code, you'll get intelligent hints
+								about which languages you can use. <CodeBlock
+									language="js"
+									codeBlock={`Props {
+	language: 'js' | 'scss' | 'php' | 'html' | 'md';
+	codeBlock: string;
+}`}
+								/>
+								<p>
+									When adding the string to the <code
+										>codeBlock</code
+									> prop, use the following syntax: <code
+										>codeBlock=&lcub;`your_code_inside_the_back_ticks`&rcub;</code
+									>.
+								</p>
+								<p>
+									If you'd simply like to add a code block
+									(but <strong>not</strong> have it copyable, you
+									can use Markdown's triple-backtick expression.
+									You can also add a language hint immediately
+									after the first 3 backticks to have Astro auto-highlight
+									your syntax. For example,<br />
+									<CodeBlock
+										language="php"
+										codeBlock={phpExample}
+									/>
+									would parse out to something like <CodeBlock
+										language="php"
+										codeBlock={`function your_php_here() {
+  $is_formatted = true;
+  return is_formatted;
+}`}
+									/> (except without the copy-to-clipboard functionality).
+								</p>
+								<p>
+									<hr />
+									<h4>Adding New Content</h4>
+									<p>
+										To add content to the blog, drop some
+										markdown files to
+										<code
+											>/src/content/blog/wherever-makes-logical-sense</code
+										>
+										and push the commit.
+									</p>
+
+									<p>
+										All markdown files are looking for the
+										following frontmatter (dropped between
+										opening & closing triple hyphens):
+										<CodeBlock
+											language="md"
+											codeBlock={frontMatter}
+										/>
+									</p>
+								</p>
 							</p>
+							<div class="tip">
+								<h3 class="tip__title">Modifying Content 🖍️</h3>
+								<p class="tip__content">
+									If making a change to a blog post, make sure
+									to change the updated date!
+								</p>
+								<CodeBlock
+									codeBlock={`updatedDate: '[YOUR_DATE_HERE]'`}
+									language="md"
+								/>
+							</div>
 						</div>
-					</div>
-					<div class="tip">
-						<h3 class="tip__title">Modifying Content 🖍️</h3>
-						<p class="tip__content">
-							If making a change to a blog post, make sure to
-							change the <code
-								>updatedDate: '[YOUR_DATE_HERE]'</code
-							>!
-						</p>
+						<Footer />
 					</div>
 				</section>
 			</article>
 		</main>
-		<Footer />
 	</body>
 </html>

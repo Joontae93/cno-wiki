@@ -13,7 +13,7 @@ const { title, description, pubDate, updatedDate, heroImage, author } =
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
-		<style>
+		<style lang="scss">
 			.title {
 				font-size: 2em;
 				margin: 0.25em 0 0;
@@ -48,6 +48,7 @@ const { title, description, pubDate, updatedDate, heroImage, author } =
 				)
 			}
 			<hr />
+
 			<slot />
 		</main>
 		<Footer />

@@ -1,0 +1,11 @@
+---
+const { language, isInline = false, codeBlock } = Astro.props;
+export interface Props {
+	language: 'js' | 'css' | 'php' | 'html' | 'md';
+	codeBlock: string;
+}
+---
+
+<pre class={`language-${language}`}>
+	<code>{codeBlock}</code>
+</pre>

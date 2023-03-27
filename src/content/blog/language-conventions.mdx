@@ -4,6 +4,7 @@ description: 'Common Web Language Authoring Conventions'
 pubDate: 'Mar 03, 2023'
 # heroImage: '/placeholder-hero.jpg'
 author: 'KJ Roelke'
+updatedDate: 'Mar 27 2023'
 ---
 
 Since we use Bootstrap/Bootscore as a starter for many of our themes and we operate inside of Wordpress, we should follow similar language style conventions to make things uniform.
@@ -25,13 +26,20 @@ Since we use Bootstrap/Bootscore as a starter for many of our themes and we oper
 
 An incredibly common pattern in plugin development is the `exit` or `die` line if 'ABSPATH' is defined. According to Wordpress's Style guide, that line should be written as:
 
-```php
+import CodeBlock from '../../components/CodeBlock.astro';
+
+<CodeBlock
+	language="php"
+	codeBlock={`
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-```
+`}
+/>
 
-However, I (KJ) believe this is unnecessary formatting for a simple line of code that is already obscure for new(er) developers. Thus, in this instance, the line should be refactored to `if (!defined('ABSPATH')) exit;`.
+However, I (KJ) believe this is unnecessary formatting for a simple line of code that is already obscure for new(er) developers. Thus, in this instance, the line should be refactored to:
+
+<CodeBlock language="php" codeBlock={`if ( ! defined( 'ABSPATH' ) ) exit;`} />
 
 ---
 
