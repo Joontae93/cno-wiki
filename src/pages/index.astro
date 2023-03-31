@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import CodeBlock from '../components/CodeBlock.astro';
+import QuickTip from '../components/QuickTip.astro';
 ---
 
 <!DOCTYPE html>
@@ -25,10 +26,16 @@ import CodeBlock from '../components/CodeBlock.astro';
 				</section>
 				<section class="how-to">
 					<h2>Some Quick Tips 📝</h2>
-
-					<div class="tip">
-						<h3 class="tip__title">Modifying Content 🖍️</h3>
-						<p class="tip__content">
+					<QuickTip title="CNO Starter Theme!">
+						<p>
+							Our WP Starter theme is live on Github. <a
+								href="https://github.com/choctaw-nation/cno-template-theme"
+								target="_blank">Check it out here.</a
+							>
+						</p>
+					</QuickTip>
+					<QuickTip title="Modifying Content 🖍️">
+						<p>
 							If making a change to a blog post, make sure to
 							change the updated date!
 						</p>
@@ -36,7 +43,7 @@ import CodeBlock from '../components/CodeBlock.astro';
 							codeBlock={`updatedDate: '[YOUR_DATE_HERE]'`}
 							language="md"
 						/>
-					</div>
+					</QuickTip>
 				</section>
 				<Footer />
 			</article>

@@ -1,0 +1,39 @@
+---
+title: 'Package Managers (Composer + npm)'
+description: 'Package Managers improve the DX of a project'
+pubDate: 'Mar 31 2023'
+author: 'KJ Roelke'
+---
+
+## Overview
+
+Package managers like npm 👾 and Composer 🎼 help us manage project dependencies without adding a ton of extra "noise" to a repo or production environment.
+
+We are able to define project dependencies (things a project needs to survive) and developer dependencies (things a developer needs to survive but are not required by the project) quickly, manage version control for these libraries, and share only _our_ code where it's needed.
+
+## Composer 🎼
+
+Assuming you've got homebrew and php installed, let's take a look at installing Composer!
+
+**Quick Start:**
+
+1. Install Composer (https://getcomposer.org/download/)
+2. Migrate it to your $PATH with `sudo mv composer.phar /usr/local/bin/composer`
+3. It's ready to be called with `composer` in your command line!
+
+## npm 👾
+
+Assuming you've got [node.js](https://nodejs.org/en/download) installed, installing npm is quick and easy.
+
+**An Even Quicker Start:**
+
+0. Check your engines with `node -v` and `npm -v`
+1. Run `npm install -g npm`
+
+That's it!
+
+## Getting Started
+
+Once you've got it installed, you can run `composer init` if you're starting a new project to set up your `composer.json` file. If that file already exists, simply run `composer install` and `composer update` to install what you need. Similarly, run `npm init` to create your `package.json` file.
+
+[Check out our starter theme for what might typically go inside your configs!](https://github.com/choctaw-nation/cno-template-theme)
