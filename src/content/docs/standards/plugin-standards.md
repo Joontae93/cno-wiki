@@ -17,6 +17,7 @@ author: 'Blake Perkins'
 
 ## Advanced Custom Fields Pro (<abbr>ACF</abbr>)
 
+-   Composer 🎼 Compatible!
 -   Add fillable fields for content team
 
 [Documentation](https://www.advancedcustomfields.com/) | Download from account
@@ -25,6 +26,7 @@ author: 'Blake Perkins'
 
 ## Autoptimize
 
+-   Composer 🎼 Compatible!
 -   Optimize CSS and JS
 
 [Download](https://wordpress.org/plugins/autoptimize/)
@@ -72,6 +74,7 @@ author: 'Blake Perkins'
 
 ## Members
 
+-   Composer 🎼 Compatible!
 -   Control capabilities of users
 [Documentation](https://docs.memberpress.com/) | [Download](https://wordpress.org/plugins/members/)
 <hr />
@@ -85,12 +88,14 @@ author: 'Blake Perkins'
 
 ## Redirection
 
+-   Composer 🎼 Compatible!
 -   Manage redirects
 [Download](https://wordpress.org/plugins/redirection/)
 <hr />
 
 ## Regenerate Thumbnails
 
+-   Composer 🎼 Compatible!
 -   Regenerate thumbnails (Useful after registering new image size)</p>
 [Download](https://wordpress.org/plugins/regenerate-thumbnails/)
 <hr />
@@ -117,12 +122,14 @@ author: 'Blake Perkins'
 
 ### Image Optimizer
 
+-   Composer 🎼 Compatible!
 -   Reduce image size and serve next gen automatically
 
 [Documentation](https://shortpixel.com/knowledge-base/category/306-shortpixel-image-optimizer) | [Download](https://wordpress.org/plugins/shortpixel-image-optimiser/)
 
 ### Adaptive Images
 
+-   Composer 🎼 Compatible!
 -   <mark>ADDING SOON</mark>
 -   Dynamically serve correctly sized image based on user's device
 
