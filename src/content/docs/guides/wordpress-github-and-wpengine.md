@@ -3,7 +3,7 @@ title: 'Wordpress, Github and WP Engine'
 description: 'A guide to creating tight integrations with our 3 main platforms'
 pubDate: 'Mar 28 2023'
 author: 'KJ Roelke'
-updateDate: 'Apr 3 2023'
+updatedDate: 'Apr 3 2023'
 ---
 
 ## An overview
