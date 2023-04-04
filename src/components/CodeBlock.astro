@@ -1,7 +1,7 @@
 ---
-const { language, isInline = false, codeBlock } = Astro.props;
+const { language, codeBlock } = Astro.props;
 export interface Props {
-	language: 'js' | 'css' | 'php' | 'html' | 'md';
+	language: 'js' | 'css' | 'php' | 'html' | 'md' | 'jsx' | 'scss';
 	codeBlock: string;
 }
 ---
