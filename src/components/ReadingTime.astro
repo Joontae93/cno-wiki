@@ -5,11 +5,12 @@ const wordCount = content.split(/\s+/g).length;
 const readingTime = Math.ceil(wordCount / READING_SPEED);
 ---
 
-<div class="reading-time"></div>
-<p>
-	{
-		`Estimated reading time: ${readingTime} minute${
-			readingTime === 1 ? '' : 's'
-		}`
-	}
-</p>
+<div class="reading-time">
+	<p>
+		{
+			`Estimated reading time: ${readingTime} minute${
+				readingTime === 1 ? '' : 's'
+			}`
+		}
+	</p>
+</div>
