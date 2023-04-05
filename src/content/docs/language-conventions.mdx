@@ -2,9 +2,8 @@
 title: 'Language Conventions'
 description: 'Common Web Language Authoring Conventions'
 pubDate: 'Mar 03, 2023'
-# heroImage: '/placeholder-hero.jpg'
 author: 'KJ Roelke'
-updatedDate: 'Mar 27 2023'
+updatedDate: 'Apr 5 2023'
 ---
 
 Since we use Bootstrap/Bootscore as a starter for many of our themes and we operate inside of Wordpress, we should follow similar language style conventions to make things uniform.
@@ -96,8 +95,8 @@ Enqueue Order:
 Each php (🐘) page should enqueue its own css (💄) on the line before `get_header('some-header') ?>` so the page only ships with the css it needs. Thus, the Enqueue Order might be understood as:
 
 1. ...vendors.css
-   2a. dist/css/global.css
-   2b. dist/css/page/page.css
+    1. dist/css/global.css
+    2. dist/css/page/page.css
 2. style.css (required by Wordpress)
 
-Where 2b is dynamically injected on each page by the server.
+Where 1.2 is dynamically injected on each page by the server.

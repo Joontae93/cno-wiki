@@ -10,14 +10,38 @@ const htmlID = id.includes(' ') ? id.replaceAll(' ', '-') : id;
 
 <section id={htmlID.toLowerCase()}>
 	<h2>{id}</h2>
-	<ul>
+	<ul class="article-list">
 		{
-			posts.map((post) => {
+			posts.map((post: any) => {
 				return (
-					<li>
-						<FormattedDate date={post.data.pubDate} />
-						<a href={`/cno-wiki/docs/${post.slug}/`}>
-							{post.data.title}
+					<li class="article__container">
+						<a
+							href={`/cno-wiki/docs/${post.slug}/`}
+							class="article">
+							<div class="article__title">{post.data.title}</div>
+							<div class="article__subtitle">
+								{post.data.description}
+							</div>
+							<div class="article-meta">
+								<span class="article-meta__time">
+									{post.data.updatedDate ? (
+										<span class="article-meta__time--updated">
+											Updated on
+											<br />
+											<FormattedDate
+												date={post.data.updatedDate}
+											/>
+										</span>
+									) : (
+										<FormattedDate
+											date={post.data.pubDate}
+										/>
+									)}
+								</span>
+								<span class="article-meta__author">
+									Written by {post.data.author}
+								</span>
+							</div>
 						</a>
 					</li>
 				);
@@ -26,15 +50,71 @@ const htmlID = id.includes(' ') ? id.replaceAll(' ', '-') : id;
 	</ul>
 </section>
 <style lang="scss">
-	ul {
+	.article-list {
 		list-style-type: none;
 		padding: unset;
-		li {
-			display: flex;
-			:global(time) {
-				flex: 0 0 130px;
-				font-style: italic;
-				color: #595959;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, max(300px));
+		gap: 2rem;
+	}
+
+	.article {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		padding: 1rem;
+		height: 100%;
+		display: block;
+		text-decoration: none;
+		color: white;
+		transition: color 0.2s ease;
+		&__container {
+			display: block;
+			border-radius: 1rem;
+			position: relative;
+			width: 100%;
+			border: 2px solid indigo;
+			background-color: indigo;
+			background-image: var(--purple-gradient);
+			transition: transform 0.2s ease, background-color 0.2s ease,
+				background-image 0.2s ease, box-shadow 0.2s ease;
+			&:hover {
+				transform: translateY(-4px);
+				box-shadow: 6px 6px indigo;
+				background-color: white;
+				background-image: none;
+				a.article {
+					color: indigo;
+				}
+			}
+		}
+		&__title {
+			font-size: 2rem;
+			font-weight: 700;
+			margin-bottom: 5px;
+			letter-spacing: 0.15rem;
+			word-wrap: normal;
+		}
+		&__subtitle {
+			margin-bottom: 2rem;
+		}
+	}
+
+	.article-meta {
+		margin-top: auto;
+		display: flex;
+		flex-direction: column;
+		&__author {
+			display: inline-block;
+		}
+		&__time {
+			display: inline-block;
+			font-style: italic;
+			time {
+				color: inherit;
+			}
+			&--updated {
+				@extend .article-meta__time;
 			}
 		}
 	}

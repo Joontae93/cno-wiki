@@ -17,13 +17,13 @@ h4,
 h5,
 h6 {
 	color: #222;
-	:is(.dark &) {
+	:where(.dark) & {
 		color: white;
 	}
 }
 a {
 	color: #3273dc;
-	:is(.dark &) {
+	:where(.dark) & {
 		color: adjust-color($color: #3273dc, $lightness: 20%);
 	}
 }
@@ -68,7 +68,7 @@ blockquote {
 	padding: 2px 0px 2px 20px;
 	margin: 0px;
 	font-style: italic;
-	:is(.dark &) {
+	:where(.dark) & {
 		background-color: #eee;
 		color: black;
 	}

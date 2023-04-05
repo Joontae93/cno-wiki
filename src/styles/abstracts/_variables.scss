@@ -1,1 +1,11 @@
 $bg-dark: #303030;
+
+$purple-gradient: linear-gradient(
+	to right bottom,
+	transparent,
+	adjust-color(indigo, $lightness: 20%)
+);
+
+:root {
+	--purple-gradient: #{$purple-gradient};
+}
