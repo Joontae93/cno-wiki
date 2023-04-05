@@ -1,0 +1,138 @@
+---
+title: 'About the Webpack.config file'
+description: 'Understanding how the webpack file works and what it extends'
+author: 'KJ Roelke'
+pubDate: 'Apr 5 2023'
+---
+
+import QuickTip from '../../../components/QuickTip.astro';
+
+This file extends the default Wordpress Webpack config in a couple of ways that (hopefully) enhance our DX experience. Let's dig in.
+
+## What is Webpack?
+
+[Webpack](https://webpack.js.org) is a module bundler. It takes in all of your JS-type files (and (S)CSS files) and compiles it into one (or more) minified, tree-shaken files for use in production.
+
+In my opinion, it's not the easiest to set up, but it's the de facto standard amongst front-end and node.js developers (other options include [_ParcelJS_](https://parceljs.org) and [_Rollup_](https://rollupjs.org)).
+
+`@wordpress/scripts` comes with a default webpack config which makes it significantly easier to use, and I've written a theme default which should make it _even easier_ to use...provided you stick to what I did. So let's get into it.
+
+We'll start at the top and make our way day.
+
+---
+
+## The `require`d statments
+
+```js
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const path = require('path');
+const defaultConfig = require('@wordpress/scripts/config/webpack.config.js');
+```
+
+-   `path` is a node.js module to get file paths (like WP's `get_stylesheet_directory()` method)
+-   `BundleAnalyzerPlugin` is a module that can help Webpack create a bundle analysis so you can see what's being used and identify any "orphan modules" you might see in the Terminal's output
+-   `defaultConfig` is the variable name for `@wordpress/scripts`' webpack.config file. We're extending, here, so we need to make sure we import it. Otherwise, we're reinventing the wheel.
+
+<QuickTip title="About the `require`d syntax">
+	Webpack uses CommonJS to import modules (as opposed to the native ESM
+	module's `import/export` syntax). So, if you're familiar with writing
+	'vanilla javascript' import statements, these work a _little_ differently,
+	but it's doing the same thing.
+</QuickTip>
+
+---
+
+## Utilities
+
+The next section of the file is what I'm calling "Utlities," and they exist to make your life easier.
+
+```js
+const THEME_NAME = 'starter-theme';
+const THEME_DIR = `/wp-content/themes/${THEME_NAME}`;
+
+function snakeToCamel(str) {
+	return str.replace(/([-_][a-z])/g, (group) =>
+		group.toUpperCase().replace('-', '').replace('_', ''),
+	);
+}
+
+/**
+ * For JSX folders (located `~/src/js/folder-name/App.jsx)`)
+ * Array of strings modeled after folder names (e.g. 'about-choctaw')
+ * */
+const appNames = [];
+
+/**
+ * For SCSS files (no leading `_`)
+ * Array of strings modeled after scss names (e.g. 'we-are-choctaw')
+ *  */
+const styleSheets = []; // for scss only
+```
+
+-   The first `const`ant declaration (`THEME_NAME`) is so you can type in your _actual_ theme name (instead of the default `starter-theme`)...assuming you changed it. If not, that's cool.
+-   The second `const` is for abstraction, later, so you don't have to stare at long file paths
+-   The function `snakeToCamel` rewrites snake-case-names to camelCase. This is used to have webpack generate camelCase names in the `/dist` folder based on snake-case names in subdirectories of the `/src` folder.
+-   `appNames` and `styleSheets` are used for code-splitting. Like their comments say, they expect an array of strings in snake-case.
+    -   `appNames` is for javascript/jsx files
+    -   `styleSheets` is for (s)css files
+
+---
+
+## `module.exports` (aka the actual Webpack config part of the file)
+
+The first line `spread`s the `defaultConfig` so the `module.exports` object becomes 1 single object.
+
+```js
+module.exports = {
+	...defaultConfig,
+	...{
+		// our custom config here
+	},
+};
+```
+
+The next object holds our `entry` and `output` properties. `entry` uses a callback function that creates a new entry for every item we have in the `appNames` and/or `styleSheets` arrays. If you wanted to define your own entry/output names, you totally could.
+
+```js
+entry: {
+	main: `.${THEME_DIR}/src/index.js`,
+	swiper: `.${THEME_DIR}/src/js/customSwiper.js`,
+	gallery: `.${THEME_DIR}/src/js/galleryLightbox.js`,
+	frontpage: `.${THEME_DIR}/src/js/frontPage.js`,
+},
+```
+
+Note: the above comes from the [Choctaw Hunting Lodge theme](https://github.com/choctaw-nation/cno-hunting-lodge/blob/master/webpack.config.js).
+
+```js
+entry: function () {
+	const entries = { global: `.${THEME_DIR}/src/index.js`,};
+
+	if (appNames.length > 0) {
+	    appNames.forEach((appName) => {
+		    const appNameOutput = snakeToCamel(appName);
+		    entries[appNameOutput] = `.${THEME_DIR}/src/js/${appName}/App.jsx`;
+        });
+	}
+	if (styleSheets.length > 0) {
+	    styleSheets.forEach((styleSheet) => {
+		    const styleSheetOutput = snakeToCamel(styleSheet);
+		    entries[styleSheetOutput] = `.${THEME_DIR}/src/styles/pages/${styleSheet}.scss`;
+		});
+	}
+	return entries;
+},
+
+output: {
+	path: __dirname + `${THEME_DIR}/dist`,
+	filename: `[name].js`,
+},
+```
+
+The `output` object tells webpack where to place the compiled files, and how to name them. Note the path ending in `/dist` and the filename using `[name].js` (which refers to the entry object).
+
+---
+
+## What about the `plugins` object?
+
+That's a standard config for the bundle analyzer. Extending plugins is outside the scope of this article, since you'll probably be doing your own research for each plugin you want to add anyways.

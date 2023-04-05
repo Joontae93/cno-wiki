@@ -5,9 +5,10 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
-const { title, description, pubDate, updatedDate, heroImage, author } =
+type Props = CollectionEntry<'docs'>['data'];
+const { title, description, pubDate, updatedDate, heroImage, author, content } =
 	Astro.props;
+import ReadingTime from '../components/ReadingTime.astro';
 ---
 
 <html lang="en">
@@ -22,13 +23,26 @@ const { title, description, pubDate, updatedDate, heroImage, author } =
 				border-top: 1px solid #ddd;
 				margin: 1rem 0;
 			}
-			.last-updated-on {
-				font-style: italic;
-				margin-top: 1rem;
+			.article-meta {
+				margin-top: 2rem;
+				font-weight: 700;
+				&__author {
+					font-weight: 400;
+				}
+				&__date {
+					font-weight: 400;
+					&--published {
+						@extend .article-meta__date;
+					}
+					&--updated {
+						@extend .article-meta__date;
+						font-style: italic;
+						margin-top: 1rem;
+					}
+				}
 			}
 		</style>
 	</head>
-
 	<body>
 		<Header />
 		<main>
@@ -38,17 +52,24 @@ const { title, description, pubDate, updatedDate, heroImage, author } =
 				)
 			}
 			<h1 class="title">{title}</h1>
-			{author && <span class="author">Authored by: {author} on </span>}
-			<FormattedDate date={pubDate} />
-			{
-				updatedDate && (
-					<div class="last-updated-on">
-						Last updated on <FormattedDate date={updatedDate} />
-					</div>
-				)
-			}
+			<div class="article-meta">
+				<span class="article-meta__author">
+					Authored by: {author}
+				</span>
+				<span class="article-meta__date--published"
+					>on
+					<FormattedDate date={pubDate} /></span
+				>
+				{
+					updatedDate && (
+						<div class="article-meta__date--updated">
+							Last updated on <FormattedDate date={updatedDate} />
+						</div>
+					)
+				}
+				<ReadingTime content={content} />
+			</div>
 			<hr />
-
 			<slot />
 		</main>
 		<Footer />
