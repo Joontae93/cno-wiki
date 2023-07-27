@@ -1,12 +1,15 @@
 ---
-title: 'Getting started (with @wordpress/scripts)'
-description: '@wordpress/scripts is an npm package developed by Wordpress'
-pubDate: 'Mar 03 2023'
+title: "Getting started (with @wordpress/scripts)"
+description: "@wordpress/scripts is an npm package developed by Wordpress"
+pubDate: "Mar 03 2023"
+updatedDate: "Jul 27 2023"
 # heroImage: '/placeholder-hero.jpg'
-author: 'KJ Roelke'
+author: "KJ Roelke"
 ---
 
-[@wordpress/scripts is an npm package developed by Wordpress that loads typically-necessary dependencies into your project for development](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/).
+_[Here is another write-up that might be helpful and/or better than mine.](https://wpdev.academy/concepts/make-webpack-configuration-easy-with-wordpress-scripts/)_
+
+[@wordpress/scripts](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/) is an npm package developed by Wordpress that loads typically-necessary dependencies into your project for development.
 
 For our purposes, it contains Babel, PostCSS, SCSS, React, and more.
 
